@@ -37,7 +37,7 @@
   }
 }
 
-.summonerSearch {
+.summonerSearch{
   /* background-image: url('./images/searchBackGround.jpg');
   background-position: center;
   background-repeat: no-repeat; */
@@ -51,4 +51,8 @@ h4.statsHeading {
 .profilePic {
   height: 100px;
   width: 100px;
+}
+
+table {
+  padding: 50px 250px 0px 250px;
 }
