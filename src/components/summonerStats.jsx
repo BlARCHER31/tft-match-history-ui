@@ -2,13 +2,15 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import SummonerInfoInput from './summonerInfoInput'
 import SummonerTable from './summonerTable'
+import MatchList from './matchList'
 
 class SummonerStats extends Component {
   state = {
     summonerName: '',
     summonerInfo: {},
     matchList: [],
-    err: {},
+    matchCount: 0,
+    err: {}
   }
 
   handleKeypress = event => {
@@ -41,7 +43,7 @@ class SummonerStats extends Component {
   onMatchListRequest = async () => {
     axios
       .get(
-        `http://localhost:8080/api/tft/v1/matches/${this.state.summonerName}?count=10`
+        `http://localhost:8080/api/tft/v1/matches/${this.state.summonerName}?count=${this.state.matchCount}`
       )
       .then(res => {
         const matchList = res.data
@@ -61,13 +63,22 @@ class SummonerStats extends Component {
 
     const { summonerName, level, profileIconUrl, puuid } =
       this.state.summonerInfo
+    const { matchList } = this.state
     return (
-      <SummonerTable
-        summonerName={summonerName}
-        level={level}
-        profileIconUrl={profileIconUrl}
-        puuid={puuid}
-      />
+      <React.Fragment>
+        <SummonerTable
+          onChange={this.handleMatchCountChange}
+          summonerName={summonerName}
+          level={level}
+          profileIconUrl={profileIconUrl}
+          puuid={puuid}
+        />
+        <MatchList
+          onClick={this.onMatchListRequest}
+          onChange={event => this.handleMatchCountChange(event)}
+          matchList={matchList}
+        />
+      </React.Fragment>
     )
   }
 

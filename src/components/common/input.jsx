@@ -1,16 +1,28 @@
 import React from 'react';
+import Button from './button'
 
-const Input = ({onChange}) => {
+const Input = ({onChange, placeHolder, label, onClick}) => {
     return ( 
+
+        <div>
+      
+      <div className='summonerSearch'>
+        <label>{label}</label>
+        <div className='input-group mb-3'>
         <input
             type='text'
             className='form-control'
-            placeholder="Summoner's username"
-            aria-label="Summoner's username"
+            placeholder={placeHolder}
+            aria-label={placeHolder}
             aria-describedby='button-addon2'
             name='summonerName'
             onChange={event => onChange(event)}
           ></input>
+          <Button onClick={onClick} label='Search'/>
+        </div>
+      </div>
+    </div>
+        
      );
 }
  
