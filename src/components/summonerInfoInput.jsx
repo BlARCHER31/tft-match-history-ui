@@ -1,5 +1,6 @@
 import React from 'react'
 import Input from './common/input'
+import Button from './common/button'
 
 const SummonerInfoInput = ({ onSummonerNameChange, onClick }) => {
   return (
@@ -9,14 +10,7 @@ const SummonerInfoInput = ({ onSummonerNameChange, onClick }) => {
         <label>Enter the Summoner Name Here</label>
         <div className='input-group mb-3'>
           <Input onChange={onSummonerNameChange} />
-          <button
-            className='btn btn-outline-secondary'
-            type='button'
-            id='button-addon2'
-            onClick={onClick}
-          >
-            Search
-          </button>
+          <Button onClick={onClick} label='Search'/>
         </div>
       </div>
     </div>
