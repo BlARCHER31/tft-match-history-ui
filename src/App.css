@@ -37,11 +37,11 @@
   }
 }
 
-.summonerSearch{
+.summonerSearch {
   /* background-image: url('./images/searchBackGround.jpg');
   background-position: center;
-  background-repeat: no-repeat; */
-  padding: 50px 250px 0px 250px;
+  background-repeat: no-repeat*/
+  margin: 50px 10%;
 }
 
 h4.statsHeading {
@@ -53,6 +53,6 @@ h4.statsHeading {
   width: 100px;
 }
 
-table {
+/* table {
   padding: 50px 250px 0px 250px;
-}
+} */

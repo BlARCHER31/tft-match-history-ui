@@ -3,6 +3,7 @@ import axios from 'axios'
 import SummonerInfoInput from './summonerInfoInput'
 import SummonerTable from './summonerTable'
 import MatchList from './matchList'
+import MatchInfo from './matchInfo'
 
 class SummonerStats extends Component {
   state = {
@@ -10,7 +11,8 @@ class SummonerStats extends Component {
     summonerInfo: {},
     matchList: [],
     matchCount: 0,
-    err: {}
+    matchInfo: {},
+    err: {},
   }
 
   handleKeypress = event => {
@@ -55,15 +57,29 @@ class SummonerStats extends Component {
       })
   }
 
-  renderTable() {
+  onMatchInfoRequest = async () => {
+    axios
+      .get(`http://localhost:8080/api/tft/v1/match/history/NA1_3617537096`)
+      .then(res => {
+        const matchInfo = res.data
+
+        this.setState({ matchInfo })
+        console.log(this.state.matchInfo)
+      })
+      .catch(err => {
+        this.setState({ err: err.message })
+      })
+  }
+
+  renderSummonerInfoTable() {
     const length = Object.keys(this.state.summonerInfo).length
     const errLength = Object.keys(this.state.err).length
-    if (length === 0) return <p></p>
+    if (length === 0) return
     if (errLength !== 0) return <p>{this.state.err}</p>
 
     const { summonerName, level, profileIconUrl, puuid } =
       this.state.summonerInfo
-    const { matchList } = this.state
+
     return (
       <React.Fragment>
         <SummonerTable
@@ -76,7 +92,7 @@ class SummonerStats extends Component {
         <MatchList
           onClick={this.onMatchListRequest}
           onChange={event => this.handleMatchCountChange(event)}
-          matchList={matchList}
+          matchList={this.state.matchList}
         />
       </React.Fragment>
     )
@@ -89,7 +105,10 @@ class SummonerStats extends Component {
           onSummonerNameChange={event => this.handleSummonerNameChange(event)}
           onClick={this.onSummonerRequest}
         />
-        <p className='summonerSearch'>{this.renderTable()}</p>
+        <div className='summonerSearch'>
+          {this.renderSummonerInfoTable()}
+          <MatchInfo onClick={this.onMatchInfoRequest} />
+        </div>
       </div>
     )
   }

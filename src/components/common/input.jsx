@@ -1,15 +1,13 @@
-import React from 'react';
+import React from 'react'
 import Button from './button'
 
-const Input = ({onChange, placeHolder, label, onClick}) => {
-    return ( 
-
-        <div>
-      
+const Input = ({ onChange, placeHolder, label, onClick }) => {
+  return (
+    <form >
       <div className='summonerSearch'>
         <label>{label}</label>
         <div className='input-group mb-3'>
-        <input
+          <input
             type='text'
             className='form-control'
             placeholder={placeHolder}
@@ -18,12 +16,11 @@ const Input = ({onChange, placeHolder, label, onClick}) => {
             name='summonerName'
             onChange={event => onChange(event)}
           ></input>
-          <Button onClick={onClick} label='Search'/>
+          <Button onClick={onClick} label='Search' type="submit"/>
         </div>
       </div>
-    </div>
-        
-     );
+      </form>
+  )
 }
- 
-export default Input;
+
+export default Input
