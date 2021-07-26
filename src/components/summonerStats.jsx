@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import SummonerInfoInput from './summonerInfoInput'
 import SummonerTable from './summonerTable'
-import MatchList from './matchList'
-import MatchInfo from './matchInfo'
+import logo from '../images/tft-penguin.webp'
 
 class SummonerStats extends Component {
   state = {
@@ -15,66 +14,53 @@ class SummonerStats extends Component {
     err: {},
   }
 
-  handleKeypress = event => {
-    if (event.keyCode === 13) {
-      this.onSummonerRequest()
-    }
-  }
   handleSummonerNameChange = event => {
-    this.setState({ summonerName: event.target.value, err: {} })
+    this.setState({ summonerName: event.target.value })
   }
   handleMatchCountChange = event => {
     this.setState({ matchCount: event.target.value, err: {} })
   }
 
-  onSummonerRequest = async () => {
+  onMatchInfoRequest = async key => {
     axios
-      .get(
-        `http://localhost:8080/api/tft/v1/summoner/${this.state.summonerName}`
-      )
-      .then(res => {
-        const summonerInfo = res.data
-        this.setState({ summonerInfo })
-        console.log(this.state.summonerInfo, this.state.summonerName)
-      })
-      .catch(err => {
-        this.setState({ err: err.message })
-      })
-  }
-
-  onMatchListRequest = async () => {
-    axios
-      .get(
-        `http://localhost:8080/api/tft/v1/matches/${this.state.summonerName}?count=${this.state.matchCount}`
-      )
-      .then(res => {
-        const matchList = res.data
-        console.log(matchList)
-        this.setState({ matchList })
-      })
-      .catch(err => {
-        this.setState({ err: err.message })
-      })
-  }
-
-  onMatchInfoRequest = async () => {
-    axios
-      .get(`http://localhost:8080/api/tft/v1/match/history/NA1_3617537096`)
+      .get(`http://localhost:8080/api/tft/v1/match/history/${key}`)
       .then(res => {
         const matchInfo = res.data
 
-        this.setState({ matchInfo })
-        console.log(this.state.matchInfo)
+        console.log(matchInfo)
       })
       .catch(err => {
-        this.setState({ err: err.message })
+        console.log(err)
+      })
+  }
+
+  onSummonerRequest = event => {
+    event.preventDefault()
+    const summonerInfo = axios.get(
+      `http://localhost:8080/api/tft/v1/summoner/${this.state.summonerName}`
+    )
+    const matchList = axios.get(
+      `http://localhost:8080/api/tft/v1/matches/${this.state.summonerName}?count=${this.state.matchCount}`
+    )
+
+    Promise.all([summonerInfo, matchList])
+      .then(res => {
+        const summonerInfo = res[0].data
+        const matchList = res[1].data
+
+        this.setState({ summonerInfo, matchList })
+        console.log(this.state.matchList)
+      })
+      .catch(err => {
+        this.setState({ err })
       })
   }
 
   renderSummonerInfoTable() {
-    const length = Object.keys(this.state.summonerInfo).length
+    const summonerLength = Object.keys(this.state.summonerInfo).length
+    const matchListLength = Object.keys(this.state.matchList).length
     const errLength = Object.keys(this.state.err).length
-    if (length === 0) return
+    if (summonerLength === 0 && matchListLength === 0) return <p>Hello</p>
     if (errLength !== 0) return <p>{this.state.err}</p>
 
     const { summonerName, level, profileIconUrl, puuid } =
@@ -83,16 +69,12 @@ class SummonerStats extends Component {
     return (
       <React.Fragment>
         <SummonerTable
-          onChange={this.handleMatchCountChange}
           summonerName={summonerName}
           level={level}
           profileIconUrl={profileIconUrl}
           puuid={puuid}
-        />
-        <MatchList
-          onClick={this.onMatchListRequest}
-          onChange={event => this.handleMatchCountChange(event)}
           matchList={this.state.matchList}
+          matchInfo={this.onMatchInfoRequest}
         />
       </React.Fragment>
     )
@@ -101,14 +83,31 @@ class SummonerStats extends Component {
   render() {
     return (
       <div>
-        <SummonerInfoInput
-          onSummonerNameChange={event => this.handleSummonerNameChange(event)}
-          onClick={this.onSummonerRequest}
-        />
-        <div className='summonerSearch'>
-          {this.renderSummonerInfoTable()}
-          <MatchInfo onClick={this.onMatchInfoRequest} />
+        <div class='bg-dark text-secondary px-4 py-5 text-center'>
+          <div class='py-5'>
+            <img src={logo} alt='' className='tft-penguin' />
+            <h1 class='display-5 fw-bold text-white'>Summoner Search</h1>
+            <div class='col-lg-6 mx-auto'>
+              <p class='fs-5 mb-4'>
+                Below you can quickly enter a summoner name and a number of
+                matches. You will receive the information for the summoner.
+                Including level, name, and a profile icon. You will also receive
+                up to 8 of the most recent Match ID's. Click on the ID to view a
+                detailed log of that game.
+              </p>
+            </div>
+          </div>
         </div>
+
+        <div class='b-example-divider mb-0'></div>
+        <SummonerInfoInput
+          handleSummonerNameChange={this.handleSummonerNameChange}
+          onMatchCountChange={this.handleMatchCountChange}
+          summonerName={this.state.summonerName}
+          matchCount={this.state.matchCount}
+          request={this.onSummonerRequest}
+        />
+        {this.renderSummonerInfoTable()}
       </div>
     )
   }

@@ -3,7 +3,6 @@ import './App.css'
 import NavBar from './components/navBar'
 import SummonerStats from './components/summonerStats'
 import Home from './components/home';
-import axios from 'axios'
 
 function App() {
   return (

@@ -37,11 +37,14 @@
   }
 }
 
-.summonerSearch {
-  /* background-image: url('./images/searchBackGround.jpg');
-  background-position: center;
-  background-repeat: no-repeat*/
-  margin: 50px 10%;
+.summonerInfo--table {
+  border: 2px solid #282c34;
+  box-shadow: 0 4px 8px 0 #3a3a3a;
+  margin: 1.3rem;
+}
+.summoner-info-input {
+  margin: auto;
+  width: 25%;
 }
 
 h4.statsHeading {
@@ -56,3 +59,36 @@ h4.statsHeading {
 /* table {
   padding: 50px 250px 0px 250px;
 } */
+
+.matches {
+  display: flex;
+  flex-wrap: wrap;
+  background: #343a40;
+  margin: auto;
+}
+
+.match--id {
+  color: #fff;
+  list-style: none;
+  margin: auto;
+  padding: 1rem;
+}
+
+.matches--heading {
+  text-align: center;
+  font-size: large;
+  color: #fff;
+}
+
+.tft-penguin {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.navbar {
+  font-size: 1.8rem;
+}
+
+.py-5 {
+  padding-bottom: 0;
+}

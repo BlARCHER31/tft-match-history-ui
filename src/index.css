@@ -9,10 +9,23 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-  monospace;
+    monospace;
 }
 
 .content {
   padding: 1rem;
-  
+}
+
+.content-container {
+  background: #212529;
+}
+
+.info-label {
+  color: #fff;
+  margin-top: 1rem;
+}
+
+
+.btn-outline-info {
+  margin-top: 2rem;
 }
