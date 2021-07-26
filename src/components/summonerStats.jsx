@@ -3,6 +3,8 @@ import axios from 'axios'
 import SummonerInfoInput from './summonerInfoInput'
 import SummonerTable from './summonerTable'
 import logo from '../images/tft-penguin.webp'
+import MatchInfo from './matchInfo'
+import _ from 'lodash'
 
 class SummonerStats extends Component {
   state = {
@@ -10,7 +12,8 @@ class SummonerStats extends Component {
     summonerInfo: {},
     matchList: [],
     matchCount: 0,
-    matchInfo: {},
+    matchInfo: [],
+    sort: '',
     err: {},
   }
 
@@ -21,12 +24,17 @@ class SummonerStats extends Component {
     this.setState({ matchCount: event.target.value, err: {} })
   }
 
+  handleSort = (path) => {
+    console.log(path)
+    this.setState({ sort: path})
+  }
+
   onMatchInfoRequest = async key => {
     axios
       .get(`http://localhost:8080/api/tft/v1/match/history/${key}`)
       .then(res => {
-        const matchInfo = res.data
-
+        const matchInfo = res.data.matchInfo
+        this.setState({ matchInfo })
         console.log(matchInfo)
       })
       .catch(err => {
@@ -80,6 +88,18 @@ class SummonerStats extends Component {
     )
   }
 
+  renderMatchInfoTable() {
+
+    const matchInfoLength = Object.keys(this.state.matchInfo).length
+    if (matchInfoLength === 0) return
+
+    return (
+      <React.Fragment>
+        <MatchInfo matchInfo={this.state.matchInfo} onSort={this.handleSort} />
+      </React.Fragment>
+    )
+  }
+
   render() {
     return (
       <div>
@@ -108,6 +128,8 @@ class SummonerStats extends Component {
           request={this.onSummonerRequest}
         />
         {this.renderSummonerInfoTable()}
+
+        {this.renderMatchInfoTable()}
       </div>
     )
   }
