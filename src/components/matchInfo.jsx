@@ -1,34 +1,34 @@
 import React from 'react'
 import _ from 'lodash'
-import { useSortBy } from 'react-table'
 
 const MatchInfo = ({ matchInfo, onSort }) => {
   const headers = [
-    'Summoner',
-    'Placement',
-    'Level',
-    'Players Eliminated',
-    'Total Damage',
+    { Header: 'Summoner', key: 'summonerName' },
+    { Header: 'Placement', key: 'placement' },
+    { Header: 'Level', key: 'level' },
+    { Header: 'Players Eliminated', key: 'playersEliminated' },
+    { Header: 'Total Damage', key: 'totalDamage' },
   ]
-
   return (
     <div className='summonerInfo--table table-responsive'>
       <table className='table table-dark table-striped'>
         <thead>
           <tr>
             {headers.map(header => (
-              <th>{header}</th>
+              <th key={header.Header} onClick={() => onSort(header.key)}>
+                {header.Header}
+              </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {matchInfo.map(player => (
+          {matchInfo.map(p => (
             <tr>
-              <th>{player.summoner.summonerName}</th>
-              <td>{player.placement}</td>
-              <td>{player.level}</td>
-              <td>{player.playersEliminated}</td>
-              <td>{player.totalDamage}</td>
+              <td>{p.summoner.summonerName}</td>
+              <td>{p.placement}</td>
+              <td>{p.level}</td>
+              <td>{p.playersEliminated}</td>
+              <td>{p.totalDamage}</td>
             </tr>
           ))}
         </tbody>

@@ -8,12 +8,11 @@ import _ from 'lodash'
 
 class SummonerStats extends Component {
   state = {
-    summonerName: '',
+    currentSort: 'up',
     summonerInfo: {},
     matchList: [],
     matchCount: 0,
     matchInfo: [],
-    sort: '',
     err: {},
   }
 
@@ -23,10 +22,29 @@ class SummonerStats extends Component {
   handleMatchCountChange = event => {
     this.setState({ matchCount: event.target.value, err: {} })
   }
+  handleMatchTableSort = key => {
+    const { currentSort } = this.state
+    const matchInfoSorted = this.state.matchInfo.sort((a, b) => {
+      if (currentSort === 'up') return a[key] - b[key]
+      if (currentSort === 'down') return b[key] - a[key]
+    })
+    this.setState({ matchInfo: matchInfoSorted })
+    this.onSortChange()
+  }
+  
+  onSortChange = () => {
+    const { currentSort } = this.state
+    let nextSort
 
-  handleSort = (path) => {
-    console.log(path)
-    this.setState({ sort: path})
+    if (currentSort === 'down') nextSort = 'up'
+    else {
+      nextSort = 'down'
+    }
+
+    this.setState({
+      currentSort: nextSort,
+    })
+    console.log(this.state.currentSort)
   }
 
   onMatchInfoRequest = async key => {
@@ -89,13 +107,16 @@ class SummonerStats extends Component {
   }
 
   renderMatchInfoTable() {
-
     const matchInfoLength = Object.keys(this.state.matchInfo).length
     if (matchInfoLength === 0) return
 
     return (
       <React.Fragment>
-        <MatchInfo matchInfo={this.state.matchInfo} onSort={this.handleSort} />
+        <MatchInfo
+          matchInfo={this.state.matchInfo}
+          onSort={this.handleMatchTableSort}
+          onSortChange={this.onSortChange}
+        />
       </React.Fragment>
     )
   }
@@ -103,12 +124,12 @@ class SummonerStats extends Component {
   render() {
     return (
       <div>
-        <div class='bg-dark text-secondary px-4 py-5 text-center'>
-          <div class='py-5'>
+        <div className='bg-dark text-secondary px-4 py-5 text-center'>
+          <div className='py-5'>
             <img src={logo} alt='' className='tft-penguin' />
-            <h1 class='display-5 fw-bold text-white'>Summoner Search</h1>
-            <div class='col-lg-6 mx-auto'>
-              <p class='fs-5 mb-4'>
+            <h1 className='display-5 fw-bold text-white'>Summoner Search</h1>
+            <div className='col-lg-6 mx-auto'>
+              <p className='fs-5 mb-4'>
                 Below you can quickly enter a summoner name and a number of
                 matches. You will receive the information for the summoner.
                 Including level, name, and a profile icon. You will also receive
@@ -119,7 +140,7 @@ class SummonerStats extends Component {
           </div>
         </div>
 
-        <div class='b-example-divider mb-0'></div>
+        <div className='b-example-divider mb-0'></div>
         <SummonerInfoInput
           handleSummonerNameChange={this.handleSummonerNameChange}
           onMatchCountChange={this.handleMatchCountChange}
