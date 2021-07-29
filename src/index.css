@@ -25,7 +25,10 @@ code {
   margin-top: 1rem;
 }
 
-
 .btn-outline-info {
   margin-top: 2rem;
+}
+
+.fa-sort {
+  padding-left: 0.5rem;
 }

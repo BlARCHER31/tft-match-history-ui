@@ -15,8 +15,10 @@ const MatchInfo = ({ matchInfo, onSort }) => {
         <thead>
           <tr>
             {headers.map(header => (
-              <th key={header.Header} onClick={() => onSort(header.key)}>
+              <th key={header.Header} >
+                
                 {header.Header}
+                <i onClick={() => onSort(header.key)} className='fa fa-sort'></i>
               </th>
             ))}
           </tr>
