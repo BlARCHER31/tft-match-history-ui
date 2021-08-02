@@ -23,7 +23,7 @@ const NavBar = () => {
           <ul className='navbar-nav'>
             <li className='nav-item'>
               <Link
-                to='/summoner/stats'
+                to='/summoner-stats'
                 className='nav-link'
                 aria-current='page'
               >

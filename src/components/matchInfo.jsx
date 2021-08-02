@@ -3,7 +3,6 @@ import _ from 'lodash'
 
 const MatchInfo = ({ matchInfo, onSort }) => {
   const headers = [
-    { Header: 'Summoner', key: 'summonerName' },
     { Header: 'Placement', key: 'placement' },
     { Header: 'Level', key: 'level' },
     { Header: 'Players Eliminated', key: 'playersEliminated' },
@@ -14,11 +13,14 @@ const MatchInfo = ({ matchInfo, onSort }) => {
       <table className='table table-dark table-striped'>
         <thead>
           <tr>
+            <th>Summoner</th>
             {headers.map(header => (
-              <th key={header.Header} >
-                
+              <th key={header.Header}>
                 {header.Header}
-                <i onClick={() => onSort(header.key)} className='fa fa-sort'></i>
+                <i
+                  onClick={() => onSort(header.key)}
+                  className='fa fa-sort'
+                ></i>
               </th>
             ))}
           </tr>

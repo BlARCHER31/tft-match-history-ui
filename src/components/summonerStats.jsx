@@ -31,7 +31,7 @@ class SummonerStats extends Component {
     this.setState({ matchInfo: matchInfoSorted })
     this.onSortChange()
   }
-  
+
   onSortChange = () => {
     const { currentSort } = this.state
     let nextSort
@@ -127,14 +127,16 @@ class SummonerStats extends Component {
         <div className='bg-dark text-secondary px-4 py-5 text-center'>
           <div className='py-5'>
             <img src={logo} alt='' className='tft-penguin' />
-            <h1 className='display-5 fw-bold text-white'>Summoner Search</h1>
+            <h1 className='display-5 fw-bold summoner-heading'>
+              <span>Summoner Search</span>
+            </h1>
             <div className='col-lg-6 mx-auto'>
-              <p className='fs-5 mb-4'>
+              <p className='fs-5 mb-4 tft-description'>
                 Below you can quickly enter a summoner name and a number of
                 matches. You will receive the information for the summoner.
                 Including level, name, and a profile icon. You will also receive
-                up to 8 of the most recent Match ID's. Click on the ID to view a
-                detailed log of that game.
+                up to 15 of the most recent Match ID's. Click on the ID to view
+                a detailed log of that game.
               </p>
             </div>
           </div>
