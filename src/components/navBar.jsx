@@ -5,7 +5,7 @@ const NavBar = () => {
   return (
     <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
       <div className='container-fluid'>
-        <NavLink to='/' className='navbar-brand'>
+        <NavLink to='/home' className='navbar-brand'>
           TeamFight Tactics
         </NavLink>
         <button
