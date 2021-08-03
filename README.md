@@ -18,6 +18,10 @@ The purpose of this project is to be able to showcase the level of knowledge for
 ## **Quick Demo**
 
 
+![Demo Of the Frontend](https://user-images.githubusercontent.com/64563904/128100376-2998a513-17af-40bf-815d-877629169eb4.mov)
+
+
+
 
 ### **Things I learned throughout**
 
